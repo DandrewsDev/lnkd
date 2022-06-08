@@ -1,0 +1,63 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dark-mode-footer {
+    bottom: 30px;
+    right: 30px;
+}
+
+.link-list-container {
+    padding-top: 4em;
+    margin: auto;
+    width: 50%;
+}
+
+.link-list-container-admin {
+    padding-top: 4em;
+    margin: auto;
+    width: 65%;
+}
+
+.link-list {
+    max-height: 350px;
+    width: 100%;
+    overflow: scroll;
+}
+
+.new-lnkd {
+    width: 50%;
+    min-width: 20%;
+    margin: auto;
+}
+
+.new-lnkd-submit {
+    float: right;
+}
+
+.custom-toast {
+    margin-top: .25em;
+}
+
+.toast-container {
+    bottom: 30px;
+    position: fixed;
+    width: 100%;
+}
+
+.user-list-container {
+    min-width: 60%;
+    max-width: 70%;
+    margin: auto;
+}
+
+.new-user-submit {
+    margin-top: 1em;
+    float: right;
+}
+
+.user-edit-name-field {
+    padding-bottom: 2em;
+    color: white;
+}

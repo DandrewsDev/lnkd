@@ -1,0 +1,10 @@
+{
+  "disallowed_routes": [
+    "UserManagement",
+    "RouteManagement",
+    "/api/lnkd",
+    "/api/users/",
+    "_app",
+    "login"
+  ]
+}
