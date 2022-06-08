@@ -30,9 +30,9 @@ var siteUrl = "https://drws.dev/"
 var disallowedRoutes DisallowedRoutes
 
 func main() {
-	setupJwtValidation()
 	initDb()
 	setupEnv()
+	setupJwtValidation()
 	setupDisallowedRoutes()
 	router := gin.Default()
 	authorized := router.Group("")
