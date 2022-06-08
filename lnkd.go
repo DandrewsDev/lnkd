@@ -358,7 +358,11 @@ func handleDbErrors(errorStr string) {
 }
 
 func initDb() {
-	cloverDb, _ = clover.Open("clover-db")
+	dbPath := "clover-db"
+	if _, err := os.Stat("/data/lnkd"); !os.IsNotExist(err) {
+		dbPath = "/data/lnkd"
+	}
+	cloverDb, _ = clover.Open(dbPath)
 
 	hasCollection, err := cloverDb.HasCollection("linkRedirects")
 	if err != nil {
