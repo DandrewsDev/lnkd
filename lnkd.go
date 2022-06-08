@@ -391,7 +391,6 @@ func setupJwtValidation() {
 	// Creates a new random key.
 	// This is more secure than using the same key, however users will be logged out if the server reboots.
 	// Note this can also cause issues if the service is load balanced and don't get the same backend everytime.
-	//generateJwtSecret()
 	keyFunc := func(ctx context.Context) (interface{}, error) {
 		// Our token must be signed using this data.
 		return jwtSecretKey, nil
@@ -419,6 +418,15 @@ func setupEnv() {
 	err := viper.BindEnv("url")
 	if err != nil {
 		log.Println(err)
+	}
+	err = viper.BindEnv("jwtkey")
+	if err != nil {
+		log.Println(err)
+	}
+	if viper.GetString("jwtkey") != "" {
+		jwtSecretKey = []byte(viper.GetString("jwtkey"))
+	} else {
+		generateJwtSecret()
 	}
 	fmt.Println(viper.Get("url"))
 	if viper.GetString("url") != "" {
@@ -448,6 +456,7 @@ func jwtAuthMiddleware() gin.HandlerFunc {
 		jwtClaims, err := jwtValidator.ValidateToken(c, c.GetHeader("Authorization"))
 		if err != nil {
 			respondWithError(401, "Invalid JWT", c)
+			fmt.Println(err)
 			return
 		}
 		claims := jwtClaims.(*validator.ValidatedClaims)
