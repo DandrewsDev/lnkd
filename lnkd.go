@@ -353,8 +353,8 @@ func main() {
 	Handle any DB Errors.
 */
 func handleDbErrors(errorStr string) {
-	fmt.Println(errorStr)
-	//log.Fatal(errorStr)
+	//fmt.Println(errorStr)
+	log.Fatal(errorStr)
 }
 
 func initDb() {
@@ -611,4 +611,9 @@ func isUsernameAllowed(userName string) bool {
 		return false
 	}
 	return true
+}
+
+func respondWithError(code int, message string, c *gin.Context) {
+	resp := map[string]string{"error": message}
+	c.AbortWithStatusJSON(code, resp)
 }
