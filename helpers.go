@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/speps/go-hashids/v2"
 	"golang.org/x/crypto/bcrypt"
 	"log"
@@ -39,11 +38,6 @@ func hashAndSalt(pwd []byte) string {
 	return string(hash)
 }
 
-func respondWithError(code int, message string, c *gin.Context) {
-	resp := map[string]string{"error": message}
-	c.AbortWithStatusJSON(code, resp)
-}
-
 func comparePasswords(hashedPwd string, plainPwd []byte) bool {
 	byteHash := []byte(hashedPwd)
 	err := bcrypt.CompareHashAndPassword(byteHash, plainPwd)
@@ -57,10 +51,10 @@ func comparePasswords(hashedPwd string, plainPwd []byte) bool {
 
 func generateNewHash(maxLength int) string {
 	hd := hashids.NewData()
-	hd.Salt = "new id hash salt data"
+	hd.Salt = randomString(35)
 	hd.MinLength = 5
 	h, _ := hashids.NewWithData(hd)
-	e, _ := h.Encode([]int{rand.Intn(1000), rand.Intn(1000), rand.Intn(1000), rand.Intn(1000)})
+	e, _ := h.Encode([]int{rand.Intn(10000), rand.Intn(10000), rand.Intn(10000), rand.Intn(10000), rand.Intn(10000)})
 	// Limit length to some defined max.
 	i := 0
 	for j := range e {
@@ -70,4 +64,16 @@ func generateNewHash(maxLength int) string {
 		i++
 	}
 	return e
+}
+
+func unique(s []string) []string {
+	inResult := make(map[string]bool)
+	var result []string
+	for _, str := range s {
+		if _, ok := inResult[str]; !ok {
+			inResult[str] = true
+			result = append(result, str)
+		}
+	}
+	return result
 }
